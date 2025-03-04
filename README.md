@@ -1,5 +1,5 @@
 # DPDD Year 2 23/25 
 
-Files for practicals. 
+Files for practicals, resources etc. 
 
-For students to Fork repository. 
+This is for students to Fork repository for projects. 
