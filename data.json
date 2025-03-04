@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Corey Veitch-McAllister",
+    "email": "corey.vmcallister@ncl-coll.ac.uk"
+  },
+  {
+    "id": 2,
+    "name": "Dinika Paramalingam",
+    "email": "dinika.paramalingam@ncl-coll.ac.uk"
+  },
+  
+  {
+    "id": "100",
+    "name": "Kevin",
+    "email": "Kevin.hilary@ncl-coll.ac.uk"
+  }
+]

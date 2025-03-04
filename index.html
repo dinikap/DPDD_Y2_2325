@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Users</h1>
+
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2>Add a New User</h2>
+    <form id="userForm">
+        <input type="number" id="id" placeholder="ID" required>
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Add User</button>
+    </form>
+
+    <script>
+        // Load and display users
+        function loadUsers() {
+            fetch("http://localhost:8080/data")
+                .then(response => response.json())
+                .then(users => {
+                    const tableBody = document.querySelector("#userTable tbody");
+                    tableBody.innerHTML = ""; // Clear table before adding data
+
+                    users.forEach(user => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error("Error loading data:", error));
+        }
+
+        // Handle form submission to add new user
+        document.getElementById("userForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form from reloading the page
+
+            const id = document.getElementById("id").value;
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+
+            const newUser = { id, name, email };
+
+            fetch("http://localhost:8080/data", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newUser)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("User added:", data);
+                loadUsers(); // Reload the table to show new data
+                document.getElementById("userForm").reset(); // Clear form fields
+            })
+            .catch(error => console.error("Error adding user:", error));
+        });
+
+        // Load users when the page loads
+        loadUsers();
+    </script>
+</body>
+</html>
